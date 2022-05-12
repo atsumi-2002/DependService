@@ -15,59 +15,55 @@ namespace DependService
         public BatteryDemo()
         {
             InitializeComponent();
-            StackLayout stack = new StackLayout();
-
-            var button = new Button
-            {
-                Text = "Click for battery info",
-                VerticalOptions = LayoutOptions.CenterAndExpand,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-            };
-            button.Clicked += (sender, e) =>
+            
+            baterryButton.Clicked += (sender, e) =>
             {
                 var bat = DependencyService.Get<IBattery>();
 
                 switch (bat.PowerSource)
                 {
                     case PowerSource.Battery:
-                        button.Text = "Battery - ";
+                        baterryButton.Text = "Battery - ";
                         break;
                     case PowerSource.Ac:
-                        button.Text = "AC - ";
+                        baterryButton.Text = "AC - ";
                         break;
                     case PowerSource.Usb:
-                        button.Text = "USB - ";
+                        baterryButton.Text = "USB - ";
                         break;
                     case PowerSource.Wireless:
-                        button.Text = "Wireless - ";
+                        baterryButton.Text = "Wireless - ";
                         break;
                     case PowerSource.Other:
                     default:
-                        button.Text = "Unknown - ";
+                        baterryButton.Text = "Unknown - ";
                         break;
                 }
                 switch (bat.Status)
                 {
                     case BatteryStatus.Charging:
-                        button.Text += "Charging";
+                        Resources["basicStyle"] = Resources["chargingStyle"];
+                        baterryButton.Text += "Charging";
                         break;
                     case BatteryStatus.Discharging:
-                        button.Text += "Discharging";
+                        Resources["basicStyle"] = Resources["dischargingStyle"];
+                        baterryButton.Text += "Discharging";
                         break;
                     case BatteryStatus.NotCharging:
-                        button.Text += "Not Charging";
+                        Resources["basicStyle"] = Resources["notchargingStyle"];
+                        baterryButton.Text += "Not Charging";
                         break;
                     case BatteryStatus.Full:
-                        button.Text += "Full";
+                        Resources["basicStyle"] = Resources["fullStyle"];
+                        baterryButton.Text += "Full";
                         break;
                     case BatteryStatus.Unknown:
                     default:
-                        button.Text += "Unknown";
+                        Resources["basicStyle"] = Resources["unknownStyle"];
+                        baterryButton.Text += "Unknown";
                         break;
                 }
             };
-            stack.Children.Add(button);
-            Content = stack;
         }
     }
 }
